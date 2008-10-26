@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>Autosave</title>
+		<style type="text/css" media="screen">
+			body { font-size: 75%; padding: 1em;}
+			body, input, textarea { font-family: Arial, sans-serif; }
+			input, textarea { font-size: 100% }
+			form fieldset { border: 0; margin: 0; padding: 0; }
+			form ul { list-style: none; margin: 0; padding: 0;}
+			form li { margin: 0 0 1em 0;}
+			label { display: block; }
+			.saving { font-weight: bold; color: #999; margin-left: 3px; display: none; }
+			textarea { width: 100%; }
+		</style>
+		<script src="jquery.js" type="text/javascript"></script>
+		<script src="jquery.cookie.js" type="text/javascript"></script>
+		<script src="jquery.autosave.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(function () {
+				$('form *').autosave();
+			});
+		</script>
+	</head>
+	<body>
+		<p>
+			<a href="#" class="autosave">Autosave</a> / <a href="#" class="autosave_restore">Restore</a> / <a href="#" class"autosave_deletecookies">Delete cookies</a> <span class="saving">Saving...</span>
+		</p> 
+		<form action="#" method="post">
+			<fieldset>
+				<ul>
+					<li>
+						<label for="select1">Select</label>
+						<select name="select1" id="select1">
+							<option value="1">Option 1</option>
+							<option value="2" selected="selected">Option 2</option>
+							<option value="3">Option 3</option>
+						</select>
+					</li>
+					<li>
+						<label for="inputtext">Input text</label>
+						<input type="text" name="inputtext" value="" id="inputtext" />
+					</li>
+					<li>
+						<label for="inputcheckboxes">Input checkboxes</label>
+						<input type="checkbox" name="inputcheckbox1" value="y" id="inputcheckbox1" checked="checked" />
+						<input type="checkbox" name="inputcheckbox2" value="y" id="inputcheckbox2" />
+						<input type="checkbox" name="inputcheckbox3" value="y" id="inputcheckbox3" />
+						<input type="checkbox" name="inputcheckbox4" value="y" id="inputcheckbox4" checked="checked" />
+					</li>
+					<li>
+						<label for="inputradio">Input radios</label>
+						<input type="radio" name="inputradio2" value="1" />
+						<input type="radio" name="inputradio2" value="2" />
+						<input type="radio" name="inputradio2" value="3" />
+					</li>
+					<li>
+						<label for="inputtext2">Input text</label>
+						<input type="text" name="inputtext2" value="" id="inputtext2" />
+					</li>
+					<li>
+						<label for="inputradio">Input radios</label>
+						<input type="radio" name="inputradio" value="1" />
+						<input type="radio" name="inputradio" value="2" checked="checked" />
+						<input type="radio" name="inputradio" value="3" />
+					</li>
+					<li>
+						<label for="textarea">Textarea</label>
+						<textarea name="textarea" rows="24" cols="40" id="textarea"></textarea>
+					</li>
+					<li>
+						<label for="select">Select</label>
+						<select name="select" id="select">
+							<option value="1">Option 1</option>
+							<option value="2" selected="selected">Option 2</option>
+							<option value="3">Option 3</option>
+						</select>
+					</li>
+				</ul>
+			</fieldset>
+		</form>
+	</body>
+</html>
