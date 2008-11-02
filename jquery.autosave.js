@@ -9,17 +9,19 @@
 	
 		function setEvents ()
 		{
-			$('.autosave_restore').click(function () {
-				$.fn.autosave.restore();
-				return false;
-			});
-		
-			$('.autosave').click(function () {
+			$( $.fn.autosave.options.saving ).hide();
+			
+			$( $.fn.autosave.options.link_autosave ).click(function () {
 				$.fn.autosave.go();
 				return false;
 			});
-		
-			$('.autosave_deletecookies').click(function () {
+			
+			$( $.fn.autosave.options.link_restore ).click(function () {
+				$.fn.autosave.restore();
+				return false;
+			});
+			
+			$( $.fn.autosave.options.link_removecookies ).click(function () {
 				$.fn.autosave.removeAllCookies();
 				return false;
 			});
@@ -78,7 +80,11 @@
 	$.fn.autosave.options = {
 		'interval': 10000,
 		'unique': '',
-		'cookiecharmaxsize': 2000
+		'cookiecharmaxsize': 2000,
+		'link_autosave': '.autosave',
+		'link_restore': '.autosave_restore',
+		'link_removecookies': '.autosave_removecookies',
+		'saving': '.saving'
 	};
 
 	$.fn.autosave.go = function () {
@@ -193,7 +199,7 @@
 	};
 
 	$.fn.autosave.saving = function () {
-		$('.saving').show().fadeTo(1000, 1).fadeOut(500);
+		$( $.fn.autosave.options.saving ).show().fadeTo(1000, 1).fadeOut(500);
 	};
 	
 })(jQuery);
