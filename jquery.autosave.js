@@ -189,21 +189,26 @@
 		}
 	
 		var cookiecheck = $.cookie('autosave_'+u+'_check').split(',');
-		cookiecheck.pop(); // Get rid of last element
-		for (i in m.check)
+		if (cookiecheck !== null)
 		{
-			var chek = (cookiecheck[i] == '1') ? 'checked' : '';
-			$(m.check[i]).attr('checked', chek);
+			cookiecheck.pop(); // Get rid of last element
+			for (i in m.check)
+			{
+				var chek = (cookiecheck[i] == '1') ? 'checked' : '';
+				$(m.check[i]).attr('checked', chek);
+			}	
 		}
-	
-	
+			
 		var cookieradio = $.cookie('autosave_'+u+'_radio').split(',');
-		cookieradio.pop(); // Get rid of last element
-		for (i in cookieradio)
+		if (cookieradio !== null)
 		{
-			$(m.radio[cookieradio[i]]).attr('checked', 'checked');
+			cookieradio.pop(); // Get rid of last element
+			for (i in cookieradio)
+			{
+				$(m.radio[cookieradio[i]]).attr('checked', 'checked');
+			}
 		}
-		
+				
 		$.fn.autosave.options.onAfterRestore();
 		
 	};
