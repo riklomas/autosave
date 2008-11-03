@@ -8,12 +8,12 @@ h2 { color: #f34105; font-size: 175%; }
 a { color: #005bd8; }
 .hr hr { display: none; }
 form { margin: 10px 0; }
-p { width: 520px; }
+p, dl, pre { width: 520px; }
 pre { font-size: 130%; background: #f7f7f7; padding: 10px 10px; font-weight: bold; }
 
-
-dt { margin-top: 10px; font-weight: bold;  }
+dt { margin-top: 10px; font-weight: bold; }
 dd { margin: 0;}
+dd.default { font-size: 93%; font-weight: bold; color: #777; }
 
 #footer { background: #333; color: #fff; padding: 10px; margin-top: 20px; }
 #footer a { color: #fff; }
@@ -25,4 +25,4 @@ form li { margin: 0 0 1em 0;}
 label { display: block; }
 textarea { width: 580px; }
 
-.saving { font-weight: bold; color: #f34105; margin-left: 3px; display: none; }
+.autosave_saving { font-weight: bold; color: #f34105; margin-left: 3px; display: none; }

@@ -41,7 +41,7 @@
 		
 		<p>To try this example, fill in some of the form fields and leave the page &ndash; <a href="http://rikrikrik.com/jquery/autosave/">clicking here will do</a>. When you come back, your precious work will have been lost as the form fields will be blank, but you can click the "Restore form" button to magically rescue your work.</p>
 		
-		<p><button class="autosave">Save form</button> <button class="autosave_restore">Restore form</button> <a href="#" class="autosave_removecookies">Delete related cookies</a> <span class="saving">Saving...</span></p>
+		<p><button class="autosave">Save form</button> <button class="autosave_restore">Restore form</button> <a href="#" class="autosave_removecookies">Delete related cookies</a> <span class="autosave_saving">Saving...</span></p>
 		<form action="#" method="post">
 			<fieldset>
 				<ul>
@@ -82,15 +82,7 @@
 					</li>
 					<li>
 						<label for="textarea">Textarea</label>
-						<textarea name="textarea" rows="24" cols="40" id="textarea"></textarea>
-					</li>
-					<li>
-						<label for="select">Select</label>
-						<select name="select" id="select">
-							<option value="1">Option 1</option>
-							<option value="2" selected="selected">Option 2</option>
-							<option value="3">Option 3</option>
-						</select>
+						<textarea name="textarea" rows="12" cols="40" id="textarea"></textarea>
 					</li>
 				</ul>
 			</fieldset>
@@ -117,16 +109,75 @@ $(form_fields).autosave(options);
 		
 		<p>By default, the class for saving the form is "<strong>autosave</strong>", the restore class is "<strong>autosave_restore</strong>" and the remove all related cookies class is "<strong>autosave_removecookies</strong>". So if you attach the class "autosave" to any link or button, it will save automatically.</p>
 
+		<p>The "Saving" notifier will show on any "<strong>autosave_saving</strong>" class</p>
+		
+		<p><strong>The plug-in requires <a href="http://www.stilbuero.de/2006/09/17/cookie-plugin-for-jquery/">Klaus Hartl's jQuery Cookie plug-in</a> to work.</strong></p>
+
 		<div class="hr">
 			<hr />
 		</div>		
 
 		<h2 id="options">Options</h2>
+		
+		<p>Here's an example of how to use options:</p>
+		
+<code><pre>
+$('textarea').autosave({
+  'interval': 20000,
+  'unique': 'articleadd'
+});
+</pre></code>
+		
+		<p>And here are the options:</p>
 
 		<dl>
-			<dt>position</dt>
-			<dd>Where the form is positioned in relation to attached.</dd>
-			<dd class="default">takes: 'prepend', 'append', 'before', 'after'. default: 'prepend'.</dd>
+			<dt>autosave</dt>
+			<dd>The jQuery expression that will handle save triggers.</dd>
+			<dd class="default">default: '.autosave'</dd>
+			
+			<dt>restore</dt>
+			<dd>The jQuery expression that will handle restore triggers.</dd>
+			<dd class="default">default: '.autosave_restore'</dd>
+			
+			<dt>removeCookies</dt>
+			<dd>The jQuery expression that will handle triggers to remove all cookies related to the autosave plug-in.</dd>
+			<dd class="default">default: '.autosave_removecookies'</dd>
+			
+			<dt>saving</dt>
+			<dd>The jQuery expression that show when save is complete.</dd>
+			<dd class="default">default: '.autosave_saving'</dd>
+			
+			<dt>interval</dt>
+			<dd>The interval that autosave will save to cookies in milliseconds.</dd>
+			<dd class="default">default: 10000</dd>
+			
+			<dt>unique</dt>
+			<dd>If you're using autosave on multiple pages within one site, assign a unique string to differentiate between pages, e.g. on a blog add page, use something like 'blogaddpage'.</dd>
+			<dd class="default">default: '', takes a string</dd>
+			
+			<dt>onBeforeSave</dt>
+			<dd>A function to be called before saving.</dd>
+			<dd class="default">takes a function</dd>
+			
+			<dt>onAfterSave</dt>
+			<dd>A function to be called after saving.</dd>
+			<dd class="default">takes a function</dd>
+			
+			<dt>onBeforeRestore</dt>
+			<dd>A function to be called before restoring.</dd>
+			<dd class="default">takes a function</dd>
+			
+			<dt>onAfterRestore</dt>
+			<dd>A function to be called after restoring.</dd>
+			<dd class="default">takes a function</dd>
+			
+			<dt>cookieCharMaxSize</dt>
+			<dd>The amount of characters for each cookie for text inputs and textareas. This isn't the maximum you can save per text input, the maximum is browser-dependent.</dd>
+			<dd class="default">default: 2000</dd>
+			
+			<dt>cookieExpiryLength</dt>
+			<dd>The length in days the cookie will last</dd>
+			<dd class="default">default: 1</dd>
 		</dl>
 
 		<div class="hr">
@@ -134,10 +185,13 @@ $(form_fields).autosave(options);
 		</div>
 
 		<h2 id="download">Download</h2>
-
+		
+		<p>The plug-in requires <a href="http://www.stilbuero.de/2006/09/17/cookie-plugin-for-jquery/">Klaus Hartl's jQuery Cookie plug-in</a> to work.</p>
+		
 		<ul>
-			<li><a href="jquery.autosave.js">Full Javascript</a> (6.5k)</li>
-			<li><a href="jquery.autosave.pack.js">Compressed version</a> (4.6k)</li>
+			<li><a href="jquery.autosave.js">Full-fat Javascript</a> (5.0k)</li>
+			<li><a href="jquery.autosave.pack.js">Packed version</a> (3.7k)</li>
+			<li><a href="jquery.autosave.pack.js">Packed version with cookies plug-in</a> (4.7k)</li>
 			<li><a href="jquery.autosave.txt">Text version</a></li>
 		</ul>
 		
