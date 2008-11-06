@@ -157,7 +157,7 @@ $('textarea').autosave({
 			
 			<dt>onBeforeSave</dt>
 			<dd>A function to be called before saving.</dd>
-			<dd class="default">takes a function</dd>
+			<dd class="default">takes a function, needs to return true to save</dd>
 			
 			<dt>onAfterSave</dt>
 			<dd>A function to be called after saving.</dd>
@@ -165,11 +165,15 @@ $('textarea').autosave({
 			
 			<dt>onBeforeRestore</dt>
 			<dd>A function to be called before restoring.</dd>
-			<dd class="default">takes a function</dd>
+			<dd class="default">takes a function, needs to return true to restore</dd>
 			
 			<dt>onAfterRestore</dt>
 			<dd>A function to be called after restoring.</dd>
 			<dd class="default">takes a function</dd>
+			
+			<dt>savingFn</dt>
+			<dd>A function to be called for saving animations.</dd>
+			<dd class="default">default: function (e) { $(e).show().fadeTo(1000, 1).fadeOut(500); }</dd>
 			
 			<dt>cookieCharMaxSize</dt>
 			<dd>The amount of characters for each cookie for text inputs and textareas. This isn't the maximum you can save per text input, the maximum is browser-dependent.</dd>
@@ -189,9 +193,9 @@ $('textarea').autosave({
 		<p>The plug-in requires <a href="http://www.stilbuero.de/2006/09/17/cookie-plugin-for-jquery/">Klaus Hartl's jQuery Cookie plug-in</a> to work.</p>
 		
 		<ul>
-			<li><a href="jquery.autosave.js">Full-fat Javascript</a> (5.0k)</li>
-			<li><a href="jquery.autosave.pack.js">Packed version</a> (3.7k)</li>
-			<li><a href="jquery.autosave.pack.js">Packed version with cookies plug-in</a> (4.7k)</li>
+			<li><a href="jquery.autosave.js">Full-fat Javascript</a> (5.2k)</li>
+			<li><a href="jquery.autosave.pack.js">Packed version</a> (2.7k)</li>
+			<li><a href="jquery.autosave.pack.js">Packed version with cookies plug-in</a> (3.4k)</li>
 			<li><a href="jquery.autosave.txt">Text version</a></li>
 		</ul>
 		

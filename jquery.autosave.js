@@ -9,7 +9,9 @@
  */
 ;(function($) {
 	$.fn.autosave = function(options) {
-		var opts = $.extend({}, $.fn.autosave.options, options);
+		
+		$.fn.autosave.options = $.extend({}, $.fn.autosave.options, options);
+		
 		var ev = false;
 		var doSave = false;
 		var ti = 0;
@@ -48,6 +50,8 @@
 			}, $.fn.autosave.options.interval);
 			ev = true;
 		}
+		
+		
 		
 		return this.filter(':text, :radio, :checkbox, select, textarea').each(function () {
 			if ($(this).is(':text, textarea')) {
@@ -93,119 +97,121 @@
 		'saving': '.autosave_saving',
 		'interval': 10000,
 		'unique': '',
-		'onBeforeSave': function () { },
+		'onBeforeSave': function () { return true; },
 		'onAfterSave': function () { },
-		'onBeforeRestore': function () { },
+		'onBeforeRestore': function () { return true; },
 		'onAfterRestore': function () { },
+		'savingFn': function (e) { $(e).show().fadeTo(1000, 1).fadeOut(500); },
 		'cookieCharMaxSize': 2000,
 		'cookieExpiryLength': 1
 	};
 
 	$.fn.autosave.go = function () {
 		
-		$.fn.autosave.options.onBeforeSave();
-		
-		var m = $.fn.autosave.values;
-		var u = $.fn.autosave.options.unique;
-		
-		function saveCookie (i, j, content)
+		if ($.fn.autosave.options.onBeforeSave())
 		{
-			$.cookie('autosave_'+u+i+'_'+j, content, { expires: $.fn.autosave.options.cookieExpiryLength });
-		}
-	
-		function removeBiggerCookies (i)
-		{
-			var j = 1;
-			while ($.cookie('autosave_'+u+i+'_'+j) !== null && j < 20)
+			var m = $.fn.autosave.values;
+			var u = $.fn.autosave.options.unique;
+		
+			function saveCookie (i, j, content)
 			{
-				$.cookie('autosave_'+u+i+'_'+j, null);
+				$.cookie('autosave_'+u+i+'_'+j, content, { expires: $.fn.autosave.options.cookieExpiryLength });
 			}
-		}
 	
-		for (i in m.text)
-		{
-			var content;
-			var j = 0;
-		
-			content = $(m.text[i]).val();
-			size = content.length;
-		
-			if (size < $.fn.autosave.options.cookieCharMaxSize)
+			function removeBiggerCookies (i)
 			{
-				saveCookie(i, 0, content);
-			}
-			else
-			{
-				removeBiggerCookies(i);
-				for (var k = 0; k < size; k += $.fn.autosave.options.cookieCharMaxSize)
+				var j = 1;
+				while ($.cookie('autosave_'+u+i+'_'+j) !== null && j < 20)
 				{
-					saveCookie(i, j, content.substr(k, $.fn.autosave.options.cookieCharMaxSize));
-					j += 1;
+					$.cookie('autosave_'+u+i+'_'+j, null);
 				}
 			}
-		}
 	
-		var cookiecheck = '';
-		for (i in m.check)
-		{
-			var content = $(m.check[i]).attr('checked') ? '1' : '0';
-			cookiecheck += content + ',';
-		}
-		$.cookie('autosave_'+u+'_check', cookiecheck);
-	
-		var cookieradio = '';
-		for (i in m.radio)
-		{
-			if($(m.radio[i]).is(':checked'))
+			for (i in m.text)
 			{
-				cookieradio += i + ',';
+				var content;
+				var j = 0;
+		
+				content = $(m.text[i]).val();
+				size = content.length;
+		
+				if (size < $.fn.autosave.options.cookieCharMaxSize)
+				{
+					saveCookie(i, 0, content);
+				}
+				else
+				{
+					removeBiggerCookies(i);
+					for (var k = 0; k < size; k += $.fn.autosave.options.cookieCharMaxSize)
+					{
+						saveCookie(i, j, content.substr(k, $.fn.autosave.options.cookieCharMaxSize));
+						j += 1;
+					}
+				}
 			}
-		}
-		$.cookie('autosave_'+u+'_radio', cookieradio);
 	
-		$.fn.autosave.saving(); 
+			var cookiecheck = '';
+			for (i in m.check)
+			{
+				var content = $(m.check[i]).attr('checked') ? '1' : '0';
+				cookiecheck += content + ',';
+			}
+			$.cookie('autosave_'+u+'_check', cookiecheck);
+	
+			var cookieradio = '';
+			for (i in m.radio)
+			{
+				if($(m.radio[i]).is(':checked'))
+				{
+					cookieradio += i + ',';
+				}
+			}
+			$.cookie('autosave_'+u+'_radio', cookieradio);
+	
+			$.fn.autosave.saving(); 
 		
-		$.fn.autosave.options.onAfterSave();
+			$.fn.autosave.options.onAfterSave();
 		
+		}
 	};
 
 	$.fn.autosave.restore = function () {
 		
-		$.fn.autosave.options.onBeforeRestore();
-		
-		var m = $.fn.autosave.values;
-		var u = $.fn.autosave.options.unique;
-	
-		for (i in m.text)
+		if ($.fn.autosave.options.onBeforeRestore())
 		{
-			var j = 0;
-			var restored = '';
-			while ($.cookie('autosave_'+u+i+'_'+j) !== null && j < 20)
+			var m = $.fn.autosave.values;
+			var u = $.fn.autosave.options.unique;
+	
+			for (i in m.text)
 			{
-				restored += $.cookie('autosave_'+u+i+'_'+j);
-				j += 1;
+				var j = 0;
+				var restored = '';
+				while ($.cookie('autosave_'+u+i+'_'+j) !== null && j < 20)
+				{
+					restored += $.cookie('autosave_'+u+i+'_'+j);
+					j += 1;
+				}
+				$(m.text[i]).val(restored);
 			}
-			$(m.text[i]).val(restored);
-		}
 	
-		var cookiecheck = $.cookie('autosave_'+u+'_check').split(',');
-		cookiecheck.pop(); // Get rid of last element
-		for (i in m.check)
-		{
-			var chek = (cookiecheck[i] == '1') ? 'checked' : '';
-			$(m.check[i]).attr('checked', chek);
-		}
+			var cookiecheck = $.cookie('autosave_'+u+'_check').split(',');
+			cookiecheck.pop(); // Get rid of last element
+			for (i in m.check)
+			{
+				var chek = (cookiecheck[i] == '1') ? 'checked' : '';
+				$(m.check[i]).attr('checked', chek);
+			}
 	
 	
-		var cookieradio = $.cookie('autosave_'+u+'_radio').split(',');
-		cookieradio.pop(); // Get rid of last element
-		for (i in cookieradio)
-		{
-			$(m.radio[cookieradio[i]]).attr('checked', 'checked');
-		}
+			var cookieradio = $.cookie('autosave_'+u+'_radio').split(',');
+			cookieradio.pop(); // Get rid of last element
+			for (i in cookieradio)
+			{
+				$(m.radio[cookieradio[i]]).attr('checked', 'checked');
+			}
 		
-		$.fn.autosave.options.onAfterRestore();
-		
+			$.fn.autosave.options.onAfterRestore();
+		}
 	};
 
 	$.fn.autosave.removeAllCookies = function () {
@@ -225,7 +231,7 @@
 	};
 
 	$.fn.autosave.saving = function () {
-		$( $.fn.autosave.options.saving ).show().fadeTo(1000, 1).fadeOut(500);
+		$.fn.autosave.options.savingFn( $.fn.autosave.options.saving );
 	};
 	
 })(jQuery);
