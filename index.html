@@ -157,7 +157,7 @@ $('textarea').autosave({
 			
 			<dt>onBeforeSave</dt>
 			<dd>A function to be called before saving.</dd>
-			<dd class="default">takes a function</dd>
+			<dd class="default">takes a function, needs to return true to save</dd>
 			
 			<dt>onAfterSave</dt>
 			<dd>A function to be called after saving.</dd>
@@ -165,11 +165,15 @@ $('textarea').autosave({
 			
 			<dt>onBeforeRestore</dt>
 			<dd>A function to be called before restoring.</dd>
-			<dd class="default">takes a function</dd>
+			<dd class="default">takes a function, needs to return true to restore</dd>
 			
 			<dt>onAfterRestore</dt>
 			<dd>A function to be called after restoring.</dd>
 			<dd class="default">takes a function</dd>
+			
+			<dt>savingFn</dt>
+			<dd>A function to be called for saving animations.</dd>
+			<dd class="default">default: function (e) { $(e).show().fadeTo(1000, 1).fadeOut(500); }</dd>
 			
 			<dt>cookieCharMaxSize</dt>
 			<dd>The amount of characters for each cookie for text inputs and textareas. This isn't the maximum you can save per text input, the maximum is browser-dependent.</dd>
